@@ -8,7 +8,7 @@
 */
 
 function Carousel() {
-  let carouselIndex = 0;
+  let currentIndex = 0;
 
   const carousel = document.createElement('div');
   const leftButton = document.createElement('div');
@@ -39,6 +39,15 @@ function Carousel() {
   images[3].src = '../../assets/carousel/turntable.jpeg';
 
   images[0].style.display = 'block';
+
+  rightButton.addEventListener('click', () => {
+    const nextIndex = currentIndex === images.length-1 ? 0 : currentIndex + 1;
+    console.log(nextIndex);
+    images[currentIndex].style.display = 'none';
+    images[nextIndex].style.display = 'block';
+
+    currentIndex = nextIndex;
+  });
 
   return carousel;
 }
