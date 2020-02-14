@@ -42,8 +42,29 @@ function Carousel() {
 
   rightButton.addEventListener('click', () => {
     const nextIndex = currentIndex === images.length-1 ? 0 : currentIndex + 1;
-    images[currentIndex].style.display = 'none';
-    images[nextIndex].style.display = 'block';
+
+    const currentImage = images[currentIndex];
+    const nextImage = images[nextIndex];
+
+    
+    gsap.to(currentImage, {
+      duration: 1,
+      x: -1200,
+      onComplete: () => {
+        currentImage.style.display = 'none';
+      }
+    });
+
+    nextImage.style.display = 'block';
+    gsap.from(nextImage, {
+      duration: 1,
+      x: 1200,
+      position: 'absolute'
+    });
+
+
+    // images[currentIndex].style.display = 'none';
+    // images[nextIndex].style.display = 'block';
     currentIndex = nextIndex;
   });
 
