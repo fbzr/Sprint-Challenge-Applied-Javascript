@@ -42,10 +42,15 @@ function Carousel() {
 
   rightButton.addEventListener('click', () => {
     const nextIndex = currentIndex === images.length-1 ? 0 : currentIndex + 1;
-    console.log(nextIndex);
     images[currentIndex].style.display = 'none';
     images[nextIndex].style.display = 'block';
+    currentIndex = nextIndex;
+  });
 
+  leftButton.addEventListener('click', () => {
+    const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+    images[currentIndex].style.display = 'none';
+    images[nextIndex].style.display = 'block';
     currentIndex = nextIndex;
   });
 
