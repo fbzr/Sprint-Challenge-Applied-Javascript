@@ -7,6 +7,28 @@
     6. Have fun!
 */
 
+const createSlideAnimation = (currentImage, nextImage, left) => {
+  nextImage.style.display = 'block';
+
+  const tl = gsap.timeline({
+    defaults: {duration: 1},
+    onComplete: () => {
+      currentImage.style.display = 'none';
+    }
+  });
+
+  tl.to(currentImage, {
+    x: left ? -1200 : 1200
+  })
+  .from(nextImage, {
+    x: left ? 1200 : -1200,
+    position: 'absolute'
+  }, '-=1')
+  .to(nextImage, {
+    x: 0
+  }, '-=1');
+}
+
 function Carousel() {
   let currentIndex = 0;
 
@@ -42,64 +64,13 @@ function Carousel() {
 
   rightButton.addEventListener('click', () => {
     const nextIndex = currentIndex === images.length-1 ? 0 : currentIndex + 1;
-
-    const currentImage = images[currentIndex];
-    const nextImage = images[nextIndex];
-    
-    nextImage.style.display = 'block';
-
-    var tl = gsap.timeline({
-      defaults: {duration: 1},
-      onComplete: () => {
-        console.log('tl completed');
-        currentImage.style.display = 'none';
-        currentImage.style.transform = null;
-      }
-    });
-
-    tl.to(currentImage, {
-      x: -1200
-    })
-    .from(nextImage, {
-      x: 1200,
-      position: 'absolute'
-    }, '-=1')
-    .to(nextImage, {
-      x: 0
-    }, '-=1');
-    
+    createSlideAnimation(images[currentIndex], images[nextIndex], true);
     currentIndex = nextIndex;
   });
 
   leftButton.addEventListener('click', () => {
-    
     const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-
-    const currentImage = images[currentIndex];
-    const nextImage = images[nextIndex];
-    
-    nextImage.style.display = 'block';
-
-    var tl = gsap.timeline({
-      defaults: {duration: 1},
-      onComplete: () => {
-        console.log('tl completed');
-        currentImage.style.display = 'none';
-        currentImage.style.transform = null;
-      }
-    });
-
-    tl.to(currentImage, {
-      x: 1200
-    })
-    .from(nextImage, {
-      x: -1200,
-      position: 'absolute'
-    }, '-=1')
-    .to(nextImage, {
-      x: 0
-    }, '-=1');
-    
+    createSlideAnimation(images[currentIndex], images[nextIndex], false);
     currentIndex = nextIndex;
   });
 
