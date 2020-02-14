@@ -45,33 +45,61 @@ function Carousel() {
 
     const currentImage = images[currentIndex];
     const nextImage = images[nextIndex];
-
     
-    gsap.to(currentImage, {
-      duration: 1,
-      x: -1200,
+    nextImage.style.display = 'block';
+
+    var tl = gsap.timeline({
+      defaults: {duration: 1},
       onComplete: () => {
+        console.log('tl completed');
         currentImage.style.display = 'none';
+        currentImage.style.transform = null;
       }
     });
 
-    nextImage.style.display = 'block';
-    gsap.from(nextImage, {
-      duration: 1,
+    tl.to(currentImage, {
+      x: -1200
+    })
+    .from(nextImage, {
       x: 1200,
       position: 'absolute'
-    });
-
-
-    // images[currentIndex].style.display = 'none';
-    // images[nextIndex].style.display = 'block';
+    }, '-=1')
+    .to(nextImage, {
+      x: 0
+    }, '-=1');
+    
     currentIndex = nextIndex;
   });
 
   leftButton.addEventListener('click', () => {
+    
     const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-    images[currentIndex].style.display = 'none';
-    images[nextIndex].style.display = 'block';
+
+    const currentImage = images[currentIndex];
+    const nextImage = images[nextIndex];
+    
+    nextImage.style.display = 'block';
+
+    var tl = gsap.timeline({
+      defaults: {duration: 1},
+      onComplete: () => {
+        console.log('tl completed');
+        currentImage.style.display = 'none';
+        currentImage.style.transform = null;
+      }
+    });
+
+    tl.to(currentImage, {
+      x: 1200
+    })
+    .from(nextImage, {
+      x: -1200,
+      position: 'absolute'
+    }, '-=1')
+    .to(nextImage, {
+      x: 0
+    }, '-=1');
+    
     currentIndex = nextIndex;
   });
 
